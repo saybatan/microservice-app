@@ -24,11 +24,20 @@ public class Account implements Serializable {
     @Column(value = "uname")
     private String username;
 
+    @Column(value = "name")
+    private String name;
+
+    @Column(value = "surname")
+    private String surname;
+
     @Column(value = "email")
     private String email;
 
     @Column(value = "pwd")
     private String password;
+
+    @Column(value = "birth_date")
+    private Date birthDate;
 
     @Column(value = "created_at")
     private Date createdAt = new Date();
