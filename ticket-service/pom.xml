@@ -9,10 +9,10 @@
         <relativePath>../service-parent/pom.xml</relativePath>
     </parent>
 
-    <artifactId>account-service</artifactId>
+    <artifactId>ticket-service</artifactId>
     <version>1.0.0</version>
-    <name>account-service</name>
-    <description>account-service</description>
+    <name>ticket-service</name>
+    <description>ticket-service</description>
 
     <properties>
         <java.version>17</java.version>
@@ -28,11 +28,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-cassandra</artifactId>
         </dependency>
 
         <dependency>
