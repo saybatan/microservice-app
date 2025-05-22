@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="account-service" />
         <module name="config-server" />
+        <module name="eureka-server" />
       </profile>
     </annotationProcessing>
   </component>
@@ -16,6 +17,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="account-service" options="-parameters" />
       <module name="config-server" options="-parameters" />
+      <module name="eureka-server" options="-parameters" />
       <module name="service-parent" options="" />
     </option>
   </component>
