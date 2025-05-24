@@ -1,4 +1,4 @@
-package com.saybatan.accountservice.dto;
+package com.saybatan.servicecommon.client.contract;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -16,4 +16,7 @@ public class AccountDto {
     private String email;
     private Date birthDate;
 
+    public String getFullName() {
+        return this.name + " " + this.surname;
+    }
 }

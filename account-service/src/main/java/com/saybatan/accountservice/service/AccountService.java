@@ -1,8 +1,8 @@
 package com.saybatan.accountservice.service;
 
-import com.saybatan.accountservice.dto.AccountDto;
 import com.saybatan.accountservice.entity.Account;
 import com.saybatan.accountservice.repository.AccountRepository;
+import com.saybatan.servicecommon.client.contract.AccountDto;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Pageable;
