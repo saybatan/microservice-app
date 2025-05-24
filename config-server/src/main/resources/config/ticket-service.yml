@@ -4,6 +4,22 @@ server:
 spring:
   application:
     name: ticket-service
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  datasource:
+    url: jdbc:mysql://localhost:3306/microservice_app
+    username: root
+    password: microserviceapp
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+springdoc:
+  api-docs:
+    path: "/api-docs"
+    enabled: true
+  swagger-ui:
+    path: "/docs"
 
 eureka:
   client:
