@@ -40,7 +40,7 @@ public class TicketServiceImpl implements TicketService {
         ticket.setTicketStatus(TicketStatus.valueOf(ticketDto.getTicketStatus()));
         ticket.setPriorityType(PriorityType.valueOf(ticketDto.getPriorityType()));
 
-        ResponseEntity<AccountDto> accountDtoResponseEntity = accountServiceClient.get(ticketDto.getAssignee());
+        ResponseEntity<AccountDto> accountDtoResponseEntity = accountServiceClient.getById(ticketDto.getAssignee());
         ticket.setAssignee(accountDtoResponseEntity.getBody().getId());
 
         ticket = ticketRepository.save(ticket);

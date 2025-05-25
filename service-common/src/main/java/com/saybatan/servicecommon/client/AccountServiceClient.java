@@ -10,6 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public interface AccountServiceClient {
 
     @RequestMapping("/account/{id}")
-    ResponseEntity<AccountDto> get(@PathVariable("id") String id);
+    ResponseEntity<AccountDto> getById(@PathVariable("id") String id);
 
 }

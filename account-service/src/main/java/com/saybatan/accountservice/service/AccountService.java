@@ -21,8 +21,14 @@ public class AccountService {
     private final AccountRepository accountRepository;
     private final ModelMapper modelMapper;
 
-    public AccountDto get(String id) {
+    public AccountDto getById(String id) {
         Account account = accountRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+        return modelMapper.map(account, AccountDto.class);
+    }
+
+    public AccountDto getByUsername(String username) {
+        Optional<Account> optionalAccount = Optional.ofNullable(accountRepository.getByUsername(username));
+        Account account = optionalAccount.orElseThrow(IllegalArgumentException::new);
         return modelMapper.map(account, AccountDto.class);
     }
 

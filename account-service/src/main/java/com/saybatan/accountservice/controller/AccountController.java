@@ -17,8 +17,13 @@ public class AccountController {
     private final AccountService accountService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<AccountDto> get(@PathVariable("id") String id) {
-        return ResponseEntity.ok(accountService.get(id));
+    public ResponseEntity<AccountDto> getById(@PathVariable("id") String id) {
+        return ResponseEntity.ok(accountService.getById(id));
+    }
+
+    @GetMapping("/username")
+    public ResponseEntity<AccountDto> getByUsername(@RequestParam String username) {
+        return ResponseEntity.ok(accountService.getByUsername(username));
     }
 
     @GetMapping
