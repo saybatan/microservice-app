@@ -4,7 +4,16 @@ server:
 spring:
   application:
     name: notification-service
-
+  cloud:
+    stream:
+      function:
+        definition: processNotification
+      bindings:
+        processNotification-in-0:
+          destination: msqueue
+  rabbitmq:
+    username: guest
+    password: guest
 eureka:
   client:
     serviceUrl:

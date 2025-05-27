@@ -13,6 +13,16 @@ spring:
     username: root
     password: microserviceapp
     driver-class-name: com.mysql.cj.jdbc.Driver
+  cloud:
+    stream:
+      function:
+        definition: sendMessage
+      bindings:
+        sendMessage-out-0:
+          destination: msqueue
+  rabbitmq:
+    username: guest
+    password: guest
 
 springdoc:
   api-docs:

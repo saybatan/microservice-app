@@ -9,6 +9,7 @@ import com.saybatan.ticketservice.enums.PriorityType;
 import com.saybatan.ticketservice.enums.TicketStatus;
 import com.saybatan.ticketservice.repository.TicketRepository;
 import com.saybatan.ticketservice.repository.elasticsearch.TicketElasticRepository;
+import com.saybatan.ticketservice.service.TicketNotificationService;
 import com.saybatan.ticketservice.service.TicketService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -26,6 +27,7 @@ public class TicketServiceImpl implements TicketService {
     private final TicketElasticRepository ticketElasticRepository;
     private final ModelMapper modelMapper;
     private final AccountServiceClient accountServiceClient;
+    private final TicketNotificationServiceImpl ticketNotificationServiceImpl;
 
     @Override
     @Transactional
@@ -44,6 +46,9 @@ public class TicketServiceImpl implements TicketService {
         ticket.setAssignee(accountDtoResponseEntity.getBody().getId());
 
         ticket = ticketRepository.save(ticket);
+
+        // TicketNotification mesajını oluştur ve kuyruğa gönder
+        ticketNotificationServiceImpl.sendToQueue(ticket);
 
         TicketModel ticketModel = TicketModel.builder()
                 .id(ticket.getId())
