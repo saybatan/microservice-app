@@ -1,6 +1,6 @@
 package com.saybatan.notificationservice.service;
 
-import com.saybatan.servicecommon.client.messaging.TicketNotification;
+import com.saybatan.servicecommon.messaging.TicketNotification;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

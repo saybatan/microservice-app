@@ -1,4 +1,4 @@
-package com.saybatan.servicecommon.client.messaging;
+package com.saybatan.servicecommon.messaging;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,6 +1,6 @@
 package com.saybatan.ticketservice.service.impl;
 
-import com.saybatan.servicecommon.client.messaging.TicketNotification;
+import com.saybatan.servicecommon.messaging.TicketNotification;
 import com.saybatan.ticketservice.entity.Ticket;
 import com.saybatan.ticketservice.service.TicketNotificationService;
 import lombok.RequiredArgsConstructor;
