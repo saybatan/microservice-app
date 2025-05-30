@@ -1,7 +1,7 @@
 package com.saybatan.ticketservice.service.impl;
 
 import com.saybatan.servicecommon.client.AccountServiceClient;
-import com.saybatan.servicecommon.client.contract.AccountDto;
+import com.saybatan.servicecommon.client.contract.AccountResponseDto;
 import com.saybatan.ticketservice.dto.TicketDto;
 import com.saybatan.ticketservice.entity.Ticket;
 import com.saybatan.ticketservice.entity.elasticsearch.TicketModel;
@@ -9,7 +9,6 @@ import com.saybatan.ticketservice.enums.PriorityType;
 import com.saybatan.ticketservice.enums.TicketStatus;
 import com.saybatan.ticketservice.repository.TicketRepository;
 import com.saybatan.ticketservice.repository.elasticsearch.TicketElasticRepository;
-import com.saybatan.ticketservice.service.TicketNotificationService;
 import com.saybatan.ticketservice.service.TicketService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -42,7 +41,7 @@ public class TicketServiceImpl implements TicketService {
         ticket.setTicketStatus(TicketStatus.valueOf(ticketDto.getTicketStatus()));
         ticket.setPriorityType(PriorityType.valueOf(ticketDto.getPriorityType()));
 
-        ResponseEntity<AccountDto> accountDtoResponseEntity = accountServiceClient.getById(ticketDto.getAssignee());
+        ResponseEntity<AccountResponseDto> accountDtoResponseEntity = accountServiceClient.getById(ticketDto.getAssignee());
         ticket.setAssignee(accountDtoResponseEntity.getBody().getId());
 
         ticket = ticketRepository.save(ticket);

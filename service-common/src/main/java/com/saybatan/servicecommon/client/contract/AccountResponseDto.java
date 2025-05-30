@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Getter
 @Setter
-public class AccountDto {
+public class AccountResponseDto {
 
     private String id;
     private String username;

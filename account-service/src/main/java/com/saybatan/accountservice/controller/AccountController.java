@@ -1,7 +1,8 @@
 package com.saybatan.accountservice.controller;
 
+import com.saybatan.accountservice.dto.AccountSaveRequestDto;
 import com.saybatan.accountservice.service.AccountService;
-import com.saybatan.servicecommon.client.contract.AccountDto;
+import com.saybatan.servicecommon.client.contract.AccountResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -17,33 +18,33 @@ public class AccountController {
     private final AccountService accountService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<AccountDto> getById(@PathVariable("id") String id) {
+    public ResponseEntity<AccountResponseDto> getById(@PathVariable("id") String id) {
         return ResponseEntity.ok(accountService.getById(id));
     }
 
     @GetMapping("/username")
-    public ResponseEntity<AccountDto> getByUsername(@RequestParam String username) {
+    public ResponseEntity<AccountResponseDto> getByUsername(@RequestParam String username) {
         return ResponseEntity.ok(accountService.getByUsername(username));
     }
 
     @GetMapping
-    public ResponseEntity<List<AccountDto>> getAll() {
+    public ResponseEntity<List<AccountResponseDto>> getAll() {
         return ResponseEntity.ok(accountService.getAll());
     }
 
     @GetMapping("/get-all-pageable")
-    public ResponseEntity<List<AccountDto>> getAllPageable(Pageable pageable) {
+    public ResponseEntity<List<AccountResponseDto>> getAllPageable(Pageable pageable) {
         return ResponseEntity.ok(accountService.getAllPageable(pageable));
     }
 
     @PostMapping
-    public ResponseEntity<AccountDto> save(@RequestBody AccountDto accountDto) {
-        return ResponseEntity.ok(accountService.save(accountDto));
+    public ResponseEntity<AccountResponseDto> save(@RequestBody AccountSaveRequestDto accountSaveRequestDto) {
+        return ResponseEntity.ok(accountService.save(accountSaveRequestDto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AccountDto> update(@PathVariable("id") String id, @RequestBody AccountDto accountDto) {
-        return ResponseEntity.ok(accountService.update(id, accountDto));
+    public ResponseEntity<AccountResponseDto> update(@PathVariable("id") String id, @RequestBody AccountSaveRequestDto accountSaveRequestDto) {
+        return ResponseEntity.ok(accountService.update(id, accountSaveRequestDto));
     }
 
     @DeleteMapping

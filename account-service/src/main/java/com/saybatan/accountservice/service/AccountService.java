@@ -1,8 +1,9 @@
 package com.saybatan.accountservice.service;
 
+import com.saybatan.accountservice.dto.AccountSaveRequestDto;
 import com.saybatan.accountservice.entity.Account;
 import com.saybatan.accountservice.repository.AccountRepository;
-import com.saybatan.servicecommon.client.contract.AccountDto;
+import com.saybatan.servicecommon.client.contract.AccountResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Pageable;
@@ -21,54 +22,54 @@ public class AccountService {
     private final AccountRepository accountRepository;
     private final ModelMapper modelMapper;
 
-    public AccountDto getById(String id) {
+    public AccountResponseDto getById(String id) {
         Account account = accountRepository.findById(id).orElseThrow(IllegalArgumentException::new);
-        return modelMapper.map(account, AccountDto.class);
+        return modelMapper.map(account, AccountResponseDto.class);
     }
 
-    public AccountDto getByUsername(String username) {
+    public AccountResponseDto getByUsername(String username) {
         Optional<Account> optionalAccount = Optional.ofNullable(accountRepository.getByUsername(username));
         Account account = optionalAccount.orElseThrow(IllegalArgumentException::new);
-        return modelMapper.map(account, AccountDto.class);
+        return modelMapper.map(account, AccountResponseDto.class);
     }
 
-    public List<AccountDto> getAll() {
+    public List<AccountResponseDto> getAll() {
         List<Account> accountList = accountRepository.findAll();
-        List<AccountDto> accountDtoList = new ArrayList<>();
+        List<AccountResponseDto> accountResponseDtoList = new ArrayList<>();
         for (Account account: accountList) {
-            accountDtoList.add(modelMapper.map(account, AccountDto.class));
+            accountResponseDtoList.add(modelMapper.map(account, AccountResponseDto.class));
         }
-        return accountDtoList;
+        return accountResponseDtoList;
     }
 
-    public List<AccountDto> getAllPageable(Pageable pageable) {
+    public List<AccountResponseDto> getAllPageable(Pageable pageable) {
         Slice<Account> all = accountRepository.findAll(pageable);
-        List<AccountDto> accountDtoList = new ArrayList<>();
+        List<AccountResponseDto> accountResponseDtoList = new ArrayList<>();
 //        for (Account account: accountList) {
 //            accountDtoList.add(modelMapper.map(account, AccountDto.class));
 //        }
-        return accountDtoList;
+        return accountResponseDtoList;
     }
 
-    public AccountDto save(AccountDto accountDto) {
-        Account account = modelMapper.map(accountDto, Account.class);
+    public AccountResponseDto save(AccountSaveRequestDto accountSaveRequestDto) {
+        Account account = modelMapper.map(accountSaveRequestDto, Account.class);
         account = accountRepository.save(account);
-        return modelMapper.map(account, AccountDto.class);
+        return modelMapper.map(account, AccountResponseDto.class);
     }
 
-    public AccountDto update(String id, AccountDto accountDto) {
+    public AccountResponseDto update(String id, AccountSaveRequestDto accountSaveRequestDto) {
         Assert.isNull(id, "Id cannot be null");
         Optional<Account> account = accountRepository.findById(id);
         Account updatedAccount = account.map(it -> {
-            it.setName(accountDto.getName());
-            it.setSurname(accountDto.getSurname());
-            it.setUsername(accountDto.getUsername());
-            it.setEmail(accountDto.getEmail());
+            it.setName(accountSaveRequestDto.getName());
+            it.setSurname(accountSaveRequestDto.getSurname());
+            it.setUsername(accountSaveRequestDto.getUsername());
+            it.setEmail(accountSaveRequestDto.getEmail());
             return it;
         }).orElseThrow(IllegalArgumentException::new);
         updatedAccount = accountRepository.save(updatedAccount);
 
-        return modelMapper.map(updatedAccount, AccountDto.class);
+        return modelMapper.map(updatedAccount, AccountResponseDto.class);
     }
 
     public void delete(String id) {
