@@ -115,7 +115,7 @@ Start services in the following order (manually via IDE or `mvn spring-boot:run`
 
 | Tool                | URL                                |
 |---------------------|-------------------------------------|
-| Eureka Dashboard     | http://localhost:8761              |
+| Eureka Dashboard     | http://localhost:8500              |
 | Spring Boot Admin    | http://localhost:8081              |
 | Kibana               | http://localhost:5601              |
 | Zipkin               | http://localhost:9411              |
