@@ -96,6 +96,7 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public Page<TicketResponseDto> getPagination(Pageable pageable) {
-        return null;
+        Page<Ticket> ticketPage = ticketRepository.findAll(pageable);
+        return ticketPage.map(ticket -> modelMapper.map(ticket, TicketResponseDto.class));
     }
 }
