@@ -2,7 +2,9 @@ package com.saybatan.ticketservice.service.impl;
 
 import com.saybatan.servicecommon.client.AccountServiceClient;
 import com.saybatan.servicecommon.client.contract.AccountResponseDto;
-import com.saybatan.ticketservice.dto.TicketDto;
+import com.saybatan.ticketservice.dto.TicketResponseDto;
+import com.saybatan.ticketservice.dto.TicketSaveRequestDto;
+import com.saybatan.ticketservice.dto.TicketUpdateRequestDto;
 import com.saybatan.ticketservice.entity.Ticket;
 import com.saybatan.ticketservice.entity.elasticsearch.TicketModel;
 import com.saybatan.ticketservice.enums.PriorityType;
@@ -18,6 +20,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class TicketServiceImpl implements TicketService {
@@ -30,18 +34,18 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     @Transactional
-    public TicketDto save(TicketDto ticketDto) {
+    public TicketResponseDto save(TicketSaveRequestDto ticketSaveRequestDto) {
         Ticket ticket = new Ticket();
-        if (ticketDto.getDescription() == null) {
+        if (ticketSaveRequestDto.getDescription() == null) {
             throw new IllegalArgumentException("Description cannot be null");
         }
-        ticket.setDescription(ticketDto.getDescription());
-        ticket.setNotes(ticketDto.getNotes());
-        ticket.setTicketDate(ticketDto.getTicketDate());
-        ticket.setTicketStatus(TicketStatus.valueOf(ticketDto.getTicketStatus()));
-        ticket.setPriorityType(PriorityType.valueOf(ticketDto.getPriorityType()));
+        ticket.setDescription(ticketSaveRequestDto.getDescription());
+        ticket.setNotes(ticketSaveRequestDto.getNotes());
+        ticket.setTicketDate(ticketSaveRequestDto.getTicketDate());
+        ticket.setTicketStatus(TicketStatus.valueOf(ticketSaveRequestDto.getTicketStatus()));
+        ticket.setPriorityType(PriorityType.valueOf(ticketSaveRequestDto.getPriorityType()));
 
-        ResponseEntity<AccountResponseDto> accountDtoResponseEntity = accountServiceClient.getById(ticketDto.getAssignee());
+        ResponseEntity<AccountResponseDto> accountDtoResponseEntity = accountServiceClient.getById(ticketSaveRequestDto.getAssignee());
         ticket.setAssignee(accountDtoResponseEntity.getBody().getId());
 
         ticket = ticketRepository.save(ticket);
@@ -61,23 +65,37 @@ public class TicketServiceImpl implements TicketService {
 
         ticketElasticRepository.save(ticketModel);
 
-        ticketDto.setId(ticket.getId());
-
-        return ticketDto;
+        return modelMapper.map(ticket, TicketResponseDto.class);
     }
 
     @Override
-    public TicketDto update(String id, TicketDto ticketDto) {
-        return null;
+    public TicketResponseDto update(String id, TicketUpdateRequestDto ticketUpdateRequestDto) {
+        if (id == null || id.isEmpty()) {
+            throw new IllegalArgumentException("Id cannot be null");
+        }
+
+        Optional<Ticket> optionalTicket = ticketRepository.findById(id);
+        Ticket updatedTicket = optionalTicket.map(ticket -> {
+            ticket.setDescription(ticketUpdateRequestDto.getDescription());
+            ticket.setNotes(ticketUpdateRequestDto.getNotes());
+            ticket.setTicketStatus(TicketStatus.valueOf(ticketUpdateRequestDto.getTicketStatus()));
+            ticket.setPriorityType(PriorityType.valueOf(ticketUpdateRequestDto.getPriorityType()));
+            return ticket;
+        }).orElseThrow(IllegalArgumentException::new);
+
+        updatedTicket = ticketRepository.save(updatedTicket);
+
+        return modelMapper.map(updatedTicket, TicketResponseDto.class);
     }
 
     @Override
-    public TicketDto getById(String id) {
-        return null;
+    public TicketResponseDto getById(String id) {
+        Ticket ticket = ticketRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+        return modelMapper.map(ticket, TicketResponseDto.class);
     }
 
     @Override
-    public Page<TicketDto> getPagination(Pageable pageable) {
+    public Page<TicketResponseDto> getPagination(Pageable pageable) {
         return null;
     }
 }

@@ -1,15 +1,16 @@
 package com.saybatan.ticketservice.service;
 
-import com.saybatan.ticketservice.dto.TicketDto;
+import com.saybatan.ticketservice.dto.TicketResponseDto;
+import com.saybatan.ticketservice.dto.TicketSaveRequestDto;
+import com.saybatan.ticketservice.dto.TicketUpdateRequestDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
 
 public interface TicketService {
 
-    TicketDto save(TicketDto ticketDto);
-    TicketDto update(String id, TicketDto ticketDto);
-    TicketDto getById(String id);
-    Page<TicketDto> getPagination(Pageable pageable);
+    TicketResponseDto save(TicketSaveRequestDto ticketSaveRequestDto);
+    TicketResponseDto update(String id, TicketUpdateRequestDto ticketUpdateRequestDto);
+    TicketResponseDto getById(String id);
+    Page<TicketResponseDto> getPagination(Pageable pageable);
 
 }

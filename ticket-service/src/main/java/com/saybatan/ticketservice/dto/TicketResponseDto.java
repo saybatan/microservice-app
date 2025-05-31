@@ -11,7 +11,7 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class TicketDto {
+public class TicketResponseDto {
 
     private String id;
     private String description;
